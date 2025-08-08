@@ -6,6 +6,7 @@
 All colors MUST be HSL.
 */
 
+/* ... keep existing code (original tokens and base styles) */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -39,19 +40,12 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -83,6 +77,7 @@ All colors MUST be HSL.
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,5 +96,43 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* --- Enhanced Design Tokens & Utilities --- */
+@layer base {
+  :root {
+    /* Accents: blue/purple gradient vibe */
+    --brand-start: 258 90% 62%; /* purple */
+    --brand-end: 220 90% 56%; /* blue */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-start)) 0%, hsl(var(--brand-end)) 100%);
+    --gradient-muted: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+
+    /* Glassmorphism */
+    --glass-bg: hsl(var(--foreground) / 0.06);
+    --glass-border: hsl(var(--foreground) / 0.08);
+    --glow: 0 10px 30px -10px hsl(var(--brand-start) / 0.35);
+  }
+  .dark {
+    --glass-bg: hsl(var(--foreground) / 0.08);
+    --glass-border: hsl(var(--foreground) / 0.12);
+    --glow: 0 10px 30px -10px hsl(var(--brand-end) / 0.45);
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-background/60 backdrop-blur-xl border rounded-lg;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: var(--glow);
+  }
+  .story-link {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+  .hover-scale { @apply transition-transform duration-200 hover:scale-105; }
+  .ai-ring {
+    background: var(--gradient-primary);
+    filter: saturate(1.1);
   }
 }
